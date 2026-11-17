@@ -57,8 +57,15 @@ async def main():
     )
 
     # Initialize the current feedback
+    # feedback="""
+    # I reached out to your customer support yesterday because I couldn't access my account.
+    # The representative responded almost immediately, was polite and professional, and fixed the issue within minutes. 
+    # Honestly, it was one of the best support experiences I've ever had.
+    # """
     feedback="""
-    I reached out to your customer support yesterday because I couldn't access my account. The representative responded almost immediately, was polite and professional, and fixed the issue within minutes. Honestly, it was one of the best support experiences I've ever had.
+    I use the dashboard every day to monitor metrics, and it works well overall. 
+    But when I'm working late at night, the bright screen is really harsh on my eyes. 
+    If you added a dark mode option, it would make the experience much more comfortable.
     """
 
     # Build sequential orchestration
@@ -75,11 +82,12 @@ async def main():
     i = 1
     for response in outputs:
         for msg in cast(list[Message], response.messages):
+            print(msg.text)
+    for response in outputs:
+        for msg in cast(list[Message], response.messages):
             name = msg.author_name or ("assistant" if msg.role == "assistant" else "user")
             print(f"{'-' * 60}\n{i:02d} [{name}]\n{msg.text}")
             i += 1
-    
-    
     
 if __name__ == "__main__":
     asyncio.run(main())
